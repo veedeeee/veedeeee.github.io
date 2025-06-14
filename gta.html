@@ -1,0 +1,95 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta property="og:title"       content="vd.wtf">
+<meta property="og:type"        content="website">
+<meta property="og:url"         content="https://vd.wtf">
+<meta property="og:image"       content="https://vd.wtf/favicon.svg">
+<meta property="og:site_name"   content="vd.wtf">
+<meta property="og:description" content="Vee Dee wants to fly.">
+<meta property="og:locale"      content="ja_JP">
+<title>vd.wtf</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48" >
+<link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="stylesheet" href="/style.css" />
+<style>
+
+body > main {
+  font-size: 16px;
+  padding: 16px 8px;
+}
+h1 { font-size: 26px; }
+h2 { font-size: 20px; }
+h3 { font-size: 18px; }
+h4 { font-size: 16px; }
+
+</style>
+<body><main>
+# スラム街 GTA ロールプレイサーバー Readme
+これはロールプレイサーバーです。ロールプレイしてください。汚職する人はいても、汚職を公にする人はいないでしょうね。
+
+## 市長
+市長は一般サラリーマンです。対応は気長に待ちましょう。
+
+連絡はゲーム内のスマホ (サービスの警察か救急か、どこかにいる) か、 <@473098215059881984>
+
+## ロールプレイサーバーへの参加方法
+各自「FiveM インストール 参加」とかでググってください
+
+IPアドレス等はスラム街Discord "一緒にゲームするサーバー" スレッドのピン留めを参照 (生IPなので漏らさないように)
+
+## ゲーム中に何かが変になったら
+キャッシュを削除しよう。
+- `%appdata%\..\Local\FiveM\FiveM.app\data` を開く
+  - ![Screenshot of Explore](https://cdn.discordapp.com/attachments/1238083048013168661/1256664038570459136/image.png?ex=66839156&is=66823fd6&hm=0c529784b956dfba4f25761eabb494a60a1d42a066404ad63965d045069e3864&)
+  - ![Screenshot of Explore](https://cdn.discordapp.com/attachments/1238083048013168661/1256664038788698243/image.png?ex=66839156&is=66823fd6&hm=52d832cc18a033e0880bae9722eec72729715d2de30c317d5137db07495da092&)
+- フォルダ3つを削除
+  - ![Screenshot of Explore](https://cdn.discordapp.com/attachments/1238083048013168661/1256664039065391174/image.png?ex=66839156&is=66823fd6&hm=4f24861e72123476c413fcfcd6c0655400b1bee9e84f3ef10aa8dcc281c1c017&)
+
+## ゲームを始めたら
+- 各役職で強い権限 (署長など) を持っている人は、部下の権限を上げられる (0から4、4が一番強い)。0は給料が少ないので、働いて1以上にしてもらおう。
+- 飲食物はコンビニ (マップのカゴみたいなマーク) で買おう
+- 煙草は Smoke On The Water (8209) で買おう。犯罪道具もここにある
+- 死んだりしてスマホが消えたらハードウェアショップ (9110, 3052, 1041)
+
+## おしごと
+- 職業をつけるのは市役所 (8155) のおっさんNPC
+- 始めたて (ランク0) は給料が少ないぞ。仕事に慣れたら偉い人 (ランク4) か市長に頼んでランクを上げてもらう。
+
+### 警察
+武器ライセンスの付与は正規には警察官にしか認めません！
+- 権限がある人が、 `/grantlicense <あげる人のID> weapon` で付与してください。除去は `/revokelicense`
+- これで「武器ライセンスカードを正規に発行する権利」が得られます。市役所 (8155) のおっさんNPCからカードを受け取ること。
+- 警察以外で武器ライセンスを持っている人は、非正規なカードを持っています。**非正規に、カードを入手する手段があるということ。**
+
+#### 罰金リスト (F7で請求)
+- プレイヤー殺人 $500 監獄5分
+- NPC殺人 $150
+- 一般車窃盗 $70
+- 緊急車両窃盗 $150
+- 銃刀法違反 $150 (武器ライセンス未所持で銃・刃物を所持)
+- 無免許運転 $70 (運転ライセンス未所持で車を運転)
+- 店舗強盗 $300
+- 銀行・宝石店強盗 $500 監獄3分
+- 警察業務執行妨害 $150
+- 救急業務執行妨害 $150
+- 危険運転 $50
+- 犯罪補助 $100
+- テロ等準備 $10000
+- 警察・救急による汚職 $30000 監獄10分 組織から除名
+- 市長の癪に障る行為 BAN
+
+### 救急
+#### 料金リスト (F7で請求)
+- 治療1箇所ごと $100
+- 病院で蘇生 $100
+- 現場で蘇生 $1000
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+  const main = document.querySelector('body > main');
+  main.innerHTML = marked.parse(main.textContent);
+</script>
+</body>

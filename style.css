@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+:root, html, body {
+  font-family: Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  background-color: #111;
+  color: #ccc;
+}
+h1, p { margin: 0; padding: 0; }
+h1, h2, h3, h4, h5, h6, dt, th { color: #eee; }
+h1, h2, h3 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+}
+h1 { font-size: 20vw; }
+h2 { font-size: 5rem; margin: 2rem 0 1rem 0; padding: 0; }
+h3 { font-size: 4rem; margin: 1rem 0 1rem 0; padding: 0; }
+h4 { font-size: 2rem; margin: 0.8rem 0 0 0; padding: 0; }
+a, a:any-link {
+  text-decoration: none;
+  color: inherit;
+}
+a[target="_new"], a[target="_blank"] {
+  &::after {
+    content: "↗";
+    vertical-align: middle;
+    font-size: 1.2rem;
+    margin-left: 1ch;
+  }
+}
+dl {
+  display: flex;
+  flex-wrap: wrap;
+  dt {
+    width: 20%;
+    margin: 0.8rem 0;
+    padding: 0;
+  }
+  dd {
+    width: 80%;
+    margin: 0.8rem 0;
+    padding: 0;
+  } 
+}
+ul, dl {
+  margin: 0;
+  padding: 0 0 0 1ch;
+}
+li {
+  list-style-type: '-';
+  margin: 0.8rem 0;
+  padding: 0 0 0 1ch;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  > section {
+    box-sizing: border-box;
+    min-height: 100dvh;
+    max-width: 100dvw;
+    padding: 2rem;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    &.splashscreen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &.portfolio {
+      #general {
+        display: flex;
+        align-items: flex-start;
+        align-content: flex-start;
+
+        > img {
+          height: 320px;
+          border-radius: 50%;
+        }
+      }
+      small {
+        display: block;
+        color: #888;
+        font-size: 0.6em;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.flex_list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  margin: 0;
+  padding: 0;
+  a::after { content: none; }
+  li {
+    list-style: none;
+    p {
+      margin: 0 0 0 0;
+      padding: 0 0 0 0;
+    }
+    &.with-avatar {
+      .avatar {
+        height: 32px;
+        width: 32px;
+        margin-right: 1ch;
+      }
+      p {
+        display: inline-block;
+        display: none;
+      }
+    }
+  }
+}
