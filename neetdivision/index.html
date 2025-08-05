@@ -88,7 +88,7 @@
   </header>
   <main>
     <form name="filters" onsubmit="return false;">
-      <label>最近<input type="number" name="recent" value="30000000" min="0">分以内の入力のみ表示する</label>
+      <label>最近<input type="number" name="recent" value="30" min="0">分以内の入力のみ表示する</label>
       <fieldset>
         <legend>宣言レーン</legend>
         <label><input type="checkbox" name="lane" value="TOP" checked>TOP</label>
@@ -96,7 +96,8 @@
         <label><input type="checkbox" name="lane" value="MID" checked>MID</label>
         <label><input type="checkbox" name="lane" value="BOT" checked>BOT</label>
         <label><input type="checkbox" name="lane" value="SUP" checked>SUP</label>
-        <button onclick="[...document.forms.filters.lane].forEach(elm => { elm.checked = true; })">すべて選択</button>
+        <button class="lane_all on">すべて選択</button>
+        <button class="lane_all off">すべてクリア</button>
       </fieldset>
       <label>サモナーレベル<input type="number" name="level" value="30">以上のみ表示する</label>
       <fieldset>
@@ -107,8 +108,9 @@
         <legend>ランク (フレックス)</legend>
         <select class="rank from" name="rank_flex_from"></select>〜<select class="rank to" name="rank_flex_to"></select>
       </fieldset>
+      <input type="reset" value="フィルターをリセット">
+      <button id="reload_table">テーブルを再読み込み</button>
     </form>
-    <button id="reload_table">テーブルを再読み込みする</button>
     <table>
       <thead><tr>
         <td>フォーム送信日時</td>
@@ -135,20 +137,20 @@
         <span class="discord">Discord ID: zyukuren</span>
       </address>
       <address>
-        <span class="title">Google Form and Spreadsheet Design, Riot API Connection</span>
+        <span class="title">Google Forms Design, Google Sheets Design and Riot API Connection</span>
         <span class="name">矢歩祐</span>
         <span class="discord">Discord ID: yuu_yabu</span>
         <span class="link"><a target="_new" href="https://x.com/yuu_yabu">X</a></span>
         <span class="link"><a target="_new" href="https://github.com/YuuYabu">GitHub</a></span>
       </address>
       <address>
-        <span class="title">Web UI Development</span>
+        <span class="title">Web Interface Development</span>
         <span class="name">Vee Dee</span>
         <span class="discord">Discord ID: v__d__</span>
         <span class="link"><a target="_new" href="https://x.com/v__d__">X</a></span>
         <span class="link"><a target="_new" href="https://github.com/veedeeee">GitHub</a></span>
       </address>
-      <p>And Thank you for all of contributors from GitHub and Discord Community. tyfp!</p>
+      <p>And Thank you all of contributors who from Discord community and GitHub. tyfp!</p>
     </section>
   </footer>
   <script>
@@ -156,12 +158,19 @@
       'DIAMOND', 'EMERALD', 'PRATIUM', 'GOLD', 'SILVER', 'BRONZE', 'IRON'
     ].map(tier => ['I', 'II', 'III', 'IV'].map(rank => `${tier} ${rank}`)).flat(), 'Unranked'].flat();
 
-    [...document.getElementsByClassName('rank')].forEach(elm => {
-      elm.innerHTML = `<option>${rankOrder.join('</option><option>')
-      }</option>`
+    [...document.getElementsByClassName('lane_all')].forEach(btn => {
+      btn.addEventListener('click', evt => {
+        [...document.forms.filters.lane].forEach(elm => { elm.checked = evt.currentTarget.classList.contains('on'); });
+        applyFilter();
+      });
     });
-    [...document.querySelectorAll('.rank.from > option:last-child' )].forEach(elm => { elm.selected = true; });
-    [...document.querySelectorAll('.rank.to   > option:first-child')].forEach(elm => { elm.selected = true; });
+
+    [...document.getElementsByClassName('rank')].forEach(elm => {
+      elm.innerHTML = rankOrder.map((v, i, a) => {
+        const selected = (elm.classList.contains('from') && i + 1 === a.length) || (elm.classList.contains('to') && 0)
+        return `<option value="${v}"${selected? ' selected' : ''}>${v}</option>`;
+      }).join('');
+    });
 
     const createTableHTMLFromObject = obj => {
       const summonerName = `${obj.summonerName}#${obj.tagLine}`;
@@ -311,6 +320,9 @@
           });
         });
         json = result;
+      }).catch(e => {
+        alert(`@v__d__ に連絡してください。 ${e.name}. ${e.message}`);
+      }).finally(() => {
         applyFilter();
       });
     };
