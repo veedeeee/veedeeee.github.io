@@ -20,6 +20,15 @@
     padding: 0;
   }
   header, main, footer { margin: 10px; }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    > main {
+      flex-grow: 1;
+    }
+  }
   header {
     border-bottom: 1px solid #ccc;
     padding: 10px 0 20px;
@@ -32,27 +41,44 @@
     text-align: center;
     b { font-weight: 900; }
   }
-  iframe {
-    display: block;
-    margin: 0 auto;
+  table {
+    margin: 10px auto;
+    td { padding: 2px 6px; }
   }
   footer {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    border-top: 1px solid #ccc;
-    padding: 20px 0 10px;
 
-    a, a:hover, a:visited, a:active {
-      color: inherit;
-      text-decoration: none;
+    > nav {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border-top: 1px solid #ccc;
+      padding: 20px 0 10px;
+
+      a, a:hover, a:visited, a:active {
+        color: inherit;
+        text-decoration: none;
+      }
+      > * {
+        padding: 1em;
+        flex: 1 1 0;
+        border: 1px solid #222;
+        border-radius: 0.6em;
+        &:last-child { text-align: right; }
+      }
     }
-    > * {
-      padding: 1em;
-      flex: 1 1 0;
-      border: 1px solid #222;
-      border-radius: 0.6em;
-      &:last-child { text-align: right; }
+
+    .credits {
+      font-size: 80%;
+      address {
+        .title::after { content: ': '; }
+        .name { font-weight: bold; }
+        .discord {
+          &::before { content: ' ('; }
+          &::after  { content: ') '; }
+        }
+        .link::after { content: ' / '; }
+        .link:last-child::after { content: ''; }
+      }
     }
   }
 </style>
@@ -61,10 +87,236 @@
     <h1><b>NEET</b>DIVISION</h1>
   </header>
   <main>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfCxFpVXxy_qvkxXM_0puL5AfJ8ENmLO1RyeZTEBlNje-QUfA/viewform?embedded=true" width="640" height="1290" frameborder="0" marginheight="0" marginwidth="0">Loading ...</iframe>
+    <form name="filters" onsubmit="return false;">
+      <label>最近<input type="number" name="recent" value="30000000" min="0">分以内の入力のみ表示する</label>
+      <fieldset>
+        <legend>宣言レーン</legend>
+        <label><input type="checkbox" name="lane" value="TOP" checked>TOP</label>
+        <label><input type="checkbox" name="lane" value="JG"  checked>JG</label>
+        <label><input type="checkbox" name="lane" value="MID" checked>MID</label>
+        <label><input type="checkbox" name="lane" value="BOT" checked>BOT</label>
+        <label><input type="checkbox" name="lane" value="SUP" checked>SUP</label>
+        <button onclick="[...document.forms.filters.lane].forEach(elm => { elm.checked = true; })">すべて選択</button>
+      </fieldset>
+      <label>サモナーレベル<input type="number" name="level" value="30">以上のみ表示する</label>
+      <fieldset>
+        <legend>ランク (ソロ/デュオ)</legend>
+        <select class="rank from" name="rank_solo_from"></select>〜<select class="rank to" name="rank_solo_to"></select>
+      </fieldset>
+      <fieldset>
+        <legend>ランク (フレックス)</legend>
+        <select class="rank from" name="rank_flex_from"></select>〜<select class="rank to" name="rank_flex_to"></select>
+      </fieldset>
+    </form>
+    <button id="reload_table">テーブルを再読み込みする</button>
+    <table>
+      <thead><tr>
+        <td>フォーム送信日時</td>
+        <td>宣言<br>レーン</td>
+        <td>メンション文字列</td>
+        <td>OP.GG</td>
+        <td>サモナー<br>レベル</td>
+        <td>ランク<br>(ソロ/デュオ)</td>
+        <td>ランク<br>(フレックス)</td>
+        <td>自由記述</td>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
   </main>
   <footer>
-    <a href="../">&#8592; vd.wtf</a>
-    <a target="_new" href="https://docs.google.com/spreadsheets/d/17OKOFXMYT_9vDe3uKQRAQj4IwLIPcP4em8VU_jXdCbU/edit?usp=sharing">Entries: Google Spreadsheet &#8594;</a>
+    <nav>
+      <a href="../">&#8592; vd.wtf</a>
+      <a target="_new" href="https://docs.google.com/spreadsheets/d/1KuDZFcgy97hOeVbQMe7PLgYig6IDRp24XCWeYcVZUTg/">Entries: Google Spreadsheet &#8594;</a>
+    </nav>
+    <section class="credits">
+      <address>
+        <span class="title">Project Organizer</span>
+        <span class="name">ZyZ</span>
+        <span class="discord">Discord ID: zyukuren</span>
+      </address>
+      <address>
+        <span class="title">Google Form and Spreadsheet Design, Riot API Connection</span>
+        <span class="name">矢歩祐</span>
+        <span class="discord">Discord ID: yuu_yabu</span>
+        <span class="link"><a target="_new" href="https://x.com/yuu_yabu">X</a></span>
+        <span class="link"><a target="_new" href="https://github.com/YuuYabu">GitHub</a></span>
+      </address>
+      <address>
+        <span class="title">Web UI Development</span>
+        <span class="name">Vee Dee</span>
+        <span class="discord">Discord ID: v__d__</span>
+        <span class="link"><a target="_new" href="https://x.com/v__d__">X</a></span>
+        <span class="link"><a target="_new" href="https://github.com/veedeeee">GitHub</a></span>
+      </address>
+      <p>And Thank you for all of contributors from GitHub and Discord Community. tyfp!</p>
+    </section>
   </footer>
+  <script>
+    const rankOrder = ['CHALLENGER', 'GRANDMASTER', 'MASTER', [
+      'DIAMOND', 'EMERALD', 'PRATIUM', 'GOLD', 'SILVER', 'BRONZE', 'IRON'
+    ].map(tier => ['I', 'II', 'III', 'IV'].map(rank => `${tier} ${rank}`)).flat(), 'Unranked'].flat();
+
+    [...document.getElementsByClassName('rank')].forEach(elm => {
+      elm.innerHTML = `<option>${rankOrder.join('</option><option>')
+      }</option>`
+    });
+    [...document.querySelectorAll('.rank.from > option:last-child' )].forEach(elm => { elm.selected = true; });
+    [...document.querySelectorAll('.rank.to   > option:first-child')].forEach(elm => { elm.selected = true; });
+
+    const createTableHTMLFromObject = obj => {
+      const summonerName = `${obj.summonerName}#${obj.tagLine}`;
+      return `<tr><td>${[
+        new Intl.DateTimeFormat('ja-JP', {
+          dateStyle: 'short',
+          timeStyle: 'long',
+          calendar: 'gregory',
+          timeZone: 'Asia/Tokyo',
+
+        }).format(obj['sentAt']),
+        obj.lane,
+        `<input type="text" name="${summonerName}" readonly value="${obj.lane} \`${summonerName}\` @${obj.discordId}">`,
+        `<a target="_new" href="${obj.opgg}">${summonerName}</a>`,
+        obj.level,
+        obj.sRank,
+        obj.fRank,
+        `<textarea readonly>${obj.note}</textarea>`
+      ].join('</td><td>')}</td></tr>`
+    };
+
+    const rankStringFormatter = str => {
+      if(str.indexOf('アンランク') !== -1) return 'Unranked';
+      if(str.indexOf('CHALLENGER') !== -1) return 'CHALLENGER';
+      if(str.indexOf('GRANDMASTER') !== -1) return 'GRANDMASTER';
+      if(str.indexOf('MASTER') !== -1) return 'MASTER';
+      return str;
+    }
+    let json = [];
+
+    const applyFilter = () => {
+      document.getElementsByTagName('tbody')[0].innerHTML = json.filter(obj => {
+        // recent entries
+        if(obj.sentAt <= new Date() - document.forms.filters.recent.value * 60 * 1000) return false;
+
+        // expected lane
+        if(-1 === [...document.forms.filters.lane].filter(elm => elm.checked).map(elm => elm.value).indexOf(obj.lane)) return false;
+
+        // summoner level
+        if(obj.level < document.forms.filters.level.value) return false;
+
+        // rank solo
+        let idx = 0;
+        let rank_solo_from_index = 99;
+        for(let opt of [...document.querySelectorAll('[name="rank_solo_from"] > option')]) {
+          if(opt.selected) {
+            rank_solo_from_index = idx;
+            break;
+          }
+          idx++;
+        }
+        if(rank_solo_from_index < rankOrder.indexOf(obj.sRank)) return false;
+
+        idx = 0;
+        let rank_solo_to_index = 0;
+        for(let opt of [...document.querySelectorAll('[name="rank_solo_to"] > option')]) {
+          if(opt.selected) {
+            rank_solo_to_index = idx;
+            break;
+          }
+          idx++;
+        }
+        if(rankOrder.indexOf(obj.sRank) < rank_solo_to_index) return false;
+
+        // rank flex
+        idx = 0;
+        let rank_flex_from_index = 99;
+        for(let opt of [...document.querySelectorAll('[name="rank_flex_from"] > option')]) {
+          if(opt.selected) {
+            rank_flex_from_index = idx;
+            break;
+          }
+          idx++;
+        }
+        if(rank_flex_from_index < rankOrder.indexOf(obj.fRank)) return false;
+
+        idx = 0;
+        let rank_flex_to_index = 0;
+        for(let opt of [...document.querySelectorAll('[name="rank_flex_to"] > option')]) {
+          if(opt.selected) {
+            rank_flex_to_index = idx;
+            break;
+          }
+          idx++;
+        }
+        if(rankOrder.indexOf(obj.fRank) < rank_flex_to_index) return false;
+
+        // ok
+        return true;
+      }).map(obj => createTableHTMLFromObject(obj)).join('');
+    };
+
+    const reloadTable = () => {
+      const sheetId = '1KuDZFcgy97hOeVbQMe7PLgYig6IDRp24XCWeYcVZUTg';
+      const sheetName = encodeURIComponent('フォームの回答 1');
+      const APIKey = 'AIzaSyBddfBQYEzF4HKPFtY6a7CZ8idtjoqPxu8';
+
+      fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${sheetName}?key=${APIKey}`
+      ).then(res => res.json()).then(res => {
+        let sentAtIndex, discordIdIndex, summonerNameIndex, tagLineIndex, tierIndex,
+            divIndex, laneIndex, opggIndex, noteIndex, summonerIndex, levelIndex, sRankIndex, fRankIndex;
+        let result = [];
+        res.values.forEach((row, idx, arr) => {
+          if(row.length === 0) return; // continue
+
+          if(row.indexOf('タイムスタンプ') !== -1) {
+            sentAtIndex = row.indexOf('タイムスタンプ');
+            discordIdIndex = row.indexOf('Discordユーザー名（例：k4sen）');
+            summonerNameIndex = row.indexOf('サモナー名');
+            tagLineIndex = row.indexOf('サモナーID');
+            tierIndex = row.indexOf('ランクティア');
+            divIndex = row.indexOf('ランクディビジョン');
+            laneIndex = row.indexOf('宣言レーン');
+            opggIndex = row.indexOf('OPGG');
+            noteIndex = row.indexOf('自由記述欄');
+            summonerIndex = row.indexOf('コピペ用');
+            levelIndex = row.indexOf('サモナーレベル');
+            sRankIndex = row.indexOf('ソロランク');
+            fRankIndex = row.indexOf('フレックス');
+            // summonerNameIndex = row.indexOf('過去20戦で宣言レーンのマッチ数');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール1');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール2');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール3');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール4');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール5');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール6');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール7');
+            // summonerNameIndex = row.indexOf('宣言レーンのプール8');
+
+            return; // continue
+          }
+          result.push({
+            sentAt: new Date(row[sentAtIndex].replaceAll('/', '-').replace(' ', 'T') + '.000+09:00'),
+            discordId: row[discordIdIndex],
+            summonerName: row[summonerNameIndex],
+            tagLine: row[tagLineIndex],
+            tier: row[tierIndex],
+            div: row[divIndex],
+            lane: row[laneIndex],
+            opgg: row[opggIndex],
+            note: row[noteIndex],
+            summoner: row[summonerIndex],
+            level: parseInt(row[levelIndex], 10),
+            sRank: rankStringFormatter(row[sRankIndex]),
+            fRank: rankStringFormatter(row[fRankIndex])
+          });
+        });
+        json = result;
+        applyFilter();
+      });
+    };
+
+    document.addEventListener('DOMContentLoaded', evt => { reloadTable(); });
+    document.forms.filters.addEventListener('change', evt => { applyFilter(); });
+    document.getElementById('reload_table').addEventListener('click', evt => { reloadTable(); });
+  </script>
 </body>
