@@ -304,7 +304,11 @@
           }
           const dateTime = row[sentAtIndex].split(' ');
           result.push({
-            sentAt: new Date(`${dateTime[0].replace('/', '-')}T${('0' + dateTime[1]).substr(-8)}.000+09:00`),
+            sentAt: new Date(`${
+              dateTime[0].replaceAll('/', '-')
+            }T${
+              ('0' + dateTime[1]).substr(-8)
+            }.000+09:00`),
             discordId: row[discordIdIndex],
             summonerName: row[summonerNameIndex],
             tagLine: row[tagLineIndex],
