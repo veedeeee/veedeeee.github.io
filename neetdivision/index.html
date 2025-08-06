@@ -191,6 +191,7 @@
     };
 
     const rankStringFormatter = str => {
+      if(!str) return 'Unranked';
       if(str.indexOf('アンランク') !== -1) return 'Unranked';
       if(str.indexOf('CHALLENGER') !== -1) return 'CHALLENGER';
       if(str.indexOf('GRANDMASTER') !== -1) return 'GRANDMASTER';
