@@ -45,8 +45,15 @@
     margin: 10px auto;
     td { padding: 2px 6px; }
   }
-  footer {
 
+  .form_buttons {
+    display: flex;
+    gap: 6px;
+    margin: 2px 0;
+    > svg.hidden { display: none; }
+  }
+
+  footer {
     > nav {
       display: flex;
       justify-content: space-between;
@@ -105,8 +112,11 @@
         <legend>ランク (フレックス)</legend>
         <select class="rank from" name="rank_flex_from"></select>〜<select class="rank to" name="rank_flex_to"></select>
       </fieldset>
-      <input type="reset" value="フィルターをリセット">
-      <button id="reload_table">テーブルを再読み込み</button>
+      <section class="form_buttons">
+        <input type="reset" value="フィルターをリセット">
+        <button id="reload_table">テーブルを再読み込み</button>
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 200 200"><radialGradient id="a11" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)"><stop offset="0" stop-color="#888888"></stop><stop offset=".3" stop-color="#888888" stop-opacity=".9"></stop><stop offset=".6" stop-color="#888888" stop-opacity=".6"></stop><stop offset=".8" stop-color="#888888" stop-opacity=".3"></stop><stop offset="1" stop-color="#888888" stop-opacity="0"></stop></radialGradient><circle transform-origin="center" fill="none" stroke="url(#a11)" stroke-width="26" stroke-linecap="round" stroke-dasharray="200 1000" stroke-dashoffset="0" cx="100" cy="100" r="70"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="360;0" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></circle><circle transform-origin="center" fill="none" opacity=".2" stroke="#888888" stroke-width="26" stroke-linecap="round" cx="100" cy="100" r="70"></circle></svg>
+      </section>
     </form>
     <table>
       <thead><tr>
@@ -263,6 +273,7 @@
     };
 
     const reloadTable = () => {
+      document.querySelector('.form_buttons > svg').classList.remove('hidden');
       const sheetId = '1KuDZFcgy97hOeVbQMe7PLgYig6IDRp24XCWeYcVZUTg';
       const sheetName = encodeURIComponent('フォームの回答 1');
       const APIKey = 'AIzaSyBddfBQYEzF4HKPFtY6a7CZ8idtjoqPxu8';
@@ -327,6 +338,7 @@
       }).catch(e => {
         alert(`@v__d__ に連絡してください。 ${e.name}. ${e.message}`);
       }).finally(() => {
+        document.querySelector('.form_buttons > svg').classList.add('hidden');
         applyFilter();
       });
     };
